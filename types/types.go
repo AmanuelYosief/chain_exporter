@@ -29,23 +29,28 @@ type (
 	}
 
 	Proposal struct {
-		ID               string
-		Type             string `json:"type"`
-		Height           int64
-		Alerted          bool `sql:",default:false,notnull"`
-		Title            string
-		Description      string
-		ProposalType     string
-		ProposalStatus   string
-		VotingStartBlock string
-		Details          struct {
-			ProposalID       string `json:"proposal_id"`
-			Title            string `json:"title"`
-			Description      string `json:"description"`
-			ProposalType     string `json:"proposal_type"`
-			ProposalStatus   string `json:"proposal_status"`
-			SubmitBlock      int64  `json:"submit_block,string"`
-			VotingStartBlock string `json:"voting_start_block"`
+		Type    string `json:"type"`
+		Alerted bool   `sql:",default:false,notnull"`
+		Value   struct {
+			ProposalID     string `json:"proposal_id"`
+			Title          string `json:"title"`
+			Description    string `json:"description"`
+			ProposalType   string `json:"proposal_type"`
+			ProposalStatus string `json:"proposal_status"`
+			TallyResult    struct {
+				Yes        string `json:"yes"`
+				Abstain    string `json:"abstain"`
+				No         string `json:"no"`
+				NoWithVeto string `json:"no_with_veto"`
+			} `json:"tally_result"`
+			SubmitTime     string `json:"submit_time"`
+			DepositEndTime string `json:"deposit_end_time"`
+			TotalDeposit   struct {
+				Denom  string `json:"denom"`
+				Amount string `json:"amount"`
+			} `json:"total_deposit"`
+			VotingStartTime string `json:"voting_start_time"`
+			VotingEndTime   string `json:"voting_end_time"`
 		} `json:"value"`
 	}
 
