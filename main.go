@@ -241,14 +241,22 @@ func (m *Monitor) GetGovernance() error {
 
 	// Copy proposal data into the database model
 	for _, proposal := range proposals {
-		proposal.ID = proposal.Details.ProposalID
-		proposal.Height = proposal.Details.SubmitBlock
 		proposal.Alerted = false
-		proposal.Description = proposal.Details.Description
-		proposal.ProposalStatus = proposal.Details.ProposalStatus
-		proposal.ProposalType = proposal.Details.ProposalType
-		proposal.Title = proposal.Details.Title
-		proposal.VotingStartBlock = proposal.Details.VotingStartBlock
+		proposal.ProposalID = proposal.Details.ProposalID
+		proposal.Title = proposal.Type.Title
+		proposal.Description = proposal.Type.Description
+		proposal.ProposalType = proposal.Value.ProposalType
+		proposal.ProposalStatus = proposal.Value.ProposalStatus
+		proposal.Yes = proposal.Value.TallyResult.Yes
+		proposal.Abstain = proposal.Value.TallyResult.Abstain
+		proposal.No = proposal.Value.TallyResult.No
+		proposal.NoWithVeto = proposal.Value.TallyResult.NoWithVeto
+		proposal.SubmitTime = proposal.Value.SubmitTime
+		proposal.DepositEndTime = proposal.Value.DepositEndTime
+		proposal.Denom = proposal.Value.TotalDeposit.Denom
+		proposal.Amount = proposal.Value.TotalDeposit.Amount
+		proposal.VotingStartTime = proposal.Value.VotingStartTime
+		proposal.VotingEndTime = proposal.Value.VotingEndTime
 	}
 
 	// Store proposals in the db
